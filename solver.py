@@ -42,12 +42,19 @@ class Problem:
         self.print_solution(solution)
 
     def solve(self):
+
         inter = self.generate_interpretation()
+        print inter
+        print self.clauses
         for cl in self.clauses:
+            sat = False
             for x in cl:
-                if x == inter[abs(x-1)]:
+                if x == inter[abs(x)-1]:
+                    sat = True
                     break
+            if not sat:
                 return False
+
         self.inter = inter
         return True
 
