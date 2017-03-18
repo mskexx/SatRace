@@ -11,14 +11,6 @@ class Problem:
         self.clauses = []
         self.inter = []
 
-    def read_file(self, cnf_file):
-
-        in_data = open(cnf_file, 'r')
-        clauses_list = [[int(n) for n in line.split() if n != '0']
-                        for line in in_data if line[0] not in ('c', 'p')]
-        #print clauses_list
-        return clauses_list
-
     def read_clauses(self, cnf_file):
         clause = []
         clauses = []
@@ -37,17 +29,16 @@ class Problem:
                 self.num_vars = int(line[2])
                 self.num_clauses = int(line[3])
         self.clauses = clauses
-        #print clauses
         self.solve()
         self.print_nosolution()
 
     def solve(self):
-        max_tries = 100
-        max_flips = 100
+        max_tries = 1000
+        max_flips = 1000
         for i in xrange(0, max_tries):
             inter = self.generate_interpretation()
             for j in xrange(0, max_flips):
-                var, cl = self.is_satisfiable(inter)
+                cl = self.is_satisfiable(inter)
                 inter = self.flip_inter(inter, cl)
         return False
 
@@ -59,7 +50,7 @@ class Problem:
                     sat = True
                     break
             if not sat:
-                return x, cl
+                return cl
 
         self.inter = inter
         self.print_solution()
@@ -68,7 +59,6 @@ class Problem:
         lit = cl[random.randint(0, len(cl)-1)]
         inter[abs(lit)-1] = inter[abs(lit)-1] * -1
         return inter
-
 
     def generate_interpretation(self):
         inter = list(xrange(1, self.num_vars+1))
@@ -87,8 +77,8 @@ class Problem:
     def print_nosolution(self):
         print "s UNSATISFIABLE"
 
+
 if __name__ == '__main__':
     random.seed()
     solver = Problem()
-    f = solver.read_file(sys.argv[1])
     solver.read_clauses(sys.argv[1])
