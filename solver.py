@@ -30,17 +30,17 @@ class Problem:
                 self.num_clauses = int(line[3])
         self.clauses = clauses
         self.solve()
-        self.print_nosolution()
 
     def solve(self):
         max_tries = 1000
-        max_flips = 1000
+        max_flips = 1500
         for i in xrange(0, max_tries):
             inter = self.generate_interpretation()
             for j in xrange(0, max_flips):
                 cl = self.is_satisfiable(inter)
                 inter = self.flip_inter(inter, cl)
-        return False
+        self.print_nosolution()
+
 
     def is_satisfiable(self, inter):
         for cl in self.clauses:
@@ -75,7 +75,8 @@ class Problem:
         sys.exit(0)
 
     def print_nosolution(self):
-        print "s UNSATISFIABLE"
+        print "s No Solution Found"
+        sys.exit(0)
 
 
 if __name__ == '__main__':
