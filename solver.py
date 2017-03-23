@@ -58,7 +58,8 @@ class Problem(object):
         self.inter = inter
         self.print_solution()
 
-    def flip_inter(self, inter, sat):
+    @staticmethod
+    def flip_inter(inter, sat):
         ''' Change a variable randomly'''
         lit = sat[random.randint(0, len(sat) - 1)]
         inter[abs(lit) - 1] = inter[abs(lit) - 1] * -1
