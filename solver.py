@@ -54,8 +54,8 @@ class Problem:
         self.inter = inter
         self.print_solution()
 
-    def flip_inter(self, inter, cl):
-        lit = cl[random.randint(0, len(cl) - 1)]
+    def flip_inter(self, inter, sat):
+        lit = sat[random.randint(0, len(sat) - 1)]
         inter[abs(lit) - 1] = inter[abs(lit) - 1] * -1
         return inter
 
